@@ -10,7 +10,7 @@ public class TypeCasting{
         System.out.println(d);
         //implicit type casting
         int x=10;
-        x=b;
+        x=(int)b;
         System.out.println(x);
         //explicit type casting
         int y = 5;
