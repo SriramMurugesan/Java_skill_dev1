@@ -1138,6 +1138,47 @@ does not start a new thread in the normal `Thread` API sense; it is just a norma
 
 ---
 
+# Thread Life Cycle (Thread States)
+
+A thread in Java always exists in one of the 6 states (defined in `Thread.State`):
+
+```text
+       NEW
+        │ start()
+        ▼
+    RUNNABLE ◄────────────────────────┐
+        │                             │
+        ├── sleep(ms) / wait(ms) ──► TIMED_WAITING
+        ├── wait() / join() ───────► WAITING
+        └── lock unavailable ──────► BLOCKED
+        │
+        ▼ run() finishes
+   TERMINATED
+```
+
+### The 6 States
+
+```text
+NEW            → Thread created using new, but start() not called yet
+RUNNABLE       → Ready to run or executing in JVM
+BLOCKED        → Waiting to acquire a monitor lock (synchronized)
+WAITING        → Waiting indefinitely for another thread (wait / join)
+TIMED_WAITING  → Waiting for a specified time (sleep / timed wait)
+TERMINATED     → run() method execution completed
+```
+
+### Check Thread State
+
+```java
+Thread t = new Thread(() -> System.out.println("Running"));
+
+System.out.println(t.getState()); // NEW
+t.start();
+System.out.println(t.getState()); // RUNNABLE
+```
+
+---
+
 # Multithreading
 
 Multiple threads can execute concurrently.
@@ -1280,6 +1321,7 @@ Thread 2 → enters
 14. What is Runnable?
 15. What is a race condition?
 16. Why use `synchronized`?
+17. What are the states in Thread Life Cycle?
 
 ---
 
@@ -1338,6 +1380,7 @@ throw/throws
 Custom exceptions
 Checked/Unchecked
 Thread
+Thread life cycle / States
 Multithreading
 start/run
 sleep
